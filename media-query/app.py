@@ -15,6 +15,12 @@ _SUPPORTED_IMAGE_EXTENSIONS = (
     '.jpg',
     '.png',
 )
+_SUPPORTED_VIDEO_EXTENSIONS = (
+    '.mp4',
+    '.flv',
+    '.mov',
+)
+
 
 def get_media_db():
     global _MEDIA_DB
@@ -33,17 +39,23 @@ def get_rekognition_client():
         _REKOGNITION_CLIENT = rekognition.RekognitionClient(
             boto3.client('rekognition')
         )
-        return _REKOGNITION_CLIENT
+    return _REKOGNITION_CLIENT
 
 
 @app.on_s3_event(bucket=os.environ['MEDIA_BUCKET_NAME'], events=['s3:ObjectCreated:*'])
 def handle_object_created(event):
     if _is_image(event.key):
         _handle_created_image(bucket=event.bucket, key=event.key)
+    elif _is_video(event.key):
+        _handle_created_video(bucket=event.bucket, key=event.key)
 
 
 def _is_image(key):
     return key.endswith(_SUPPORTED_IMAGE_EXTENSIONS)
+
+
+def _is_video(key):
+    return key.endswith(_SUPPORTED_VIDEO_EXTENSIONS)
 
 
 def _handle_created_image(bucket, key):
@@ -51,9 +63,16 @@ def _handle_created_image(bucket, key):
     get_media_db().add_media_file(key, media_type=db.IMAGE_TYPE, labels=labels)
 
 
+def _handle_created_video(bucket, key):
+    get_rekognition_client().start_video_label_job(
+        bucket=bucket, key=key, topic_arn=os.environ['VIDEO_TOPIC_ARN'],
+        role_arn=os.environ['VIDEO_ROLE_ARN']
+    )
+
+
 @app.on_s3_event(bucket=os.environ['MEDIA_BUCKET_NAME'], events=['s3:ObjectRemoved:*'])
 def handle_object_removed(event):
-    if _is_image(event.key):
+    if _is_image(event.key) or _is_video(event.key):
         get_media_db().delete_media_file(event.key)
         print(event.key, 'is deleted')
 
