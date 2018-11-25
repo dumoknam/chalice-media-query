@@ -16,6 +16,23 @@
       "resource_type": "s3_event",
       "bucket": "chalice-media-query-mediabucket-1xo3serm32koj",
       "lambda_arn": "arn:aws:lambda:ap-northeast-2:862108802423:function:media-query-dev-handle_object_created"
+    },
+    {
+      "name": "handle_object_removed_role",
+      "resource_type": "iam_role",
+      "role_arn": "arn:aws:iam::862108802423:role/media-query-dev-handle_object_removed",
+      "role_name": "media-query-dev-handle_object_removed"
+    },
+    {
+      "name": "handle_object_removed",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:ap-northeast-2:862108802423:function:media-query-dev-handle_object_removed"
+    },
+    {
+      "name": "handle_object_removed-s3event",
+      "resource_type": "s3_event",
+      "bucket": "chalice-media-query-mediabucket-1xo3serm32koj",
+      "lambda_arn": "arn:aws:lambda:ap-northeast-2:862108802423:function:media-query-dev-handle_object_removed"
     }
   ],
   "schema_version": "2.0",

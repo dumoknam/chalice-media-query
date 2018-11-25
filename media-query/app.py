@@ -47,3 +47,10 @@ def _is_image(key):
 def _handle_created_image(bucket, key):
     labels = get_rekognition_client().get_image_labels(bucket=bucket, key=key)
     get_media_db().add_media_file(key, media_type=db.IMAGE_TYPE, labels=labels)
+
+
+@app.on_s3_event(bucket=os.environ['MEDIA_BUCKET_NAME'], events=['s3:ObjectRemoved:*'])
+def handle_object_removed(event):
+    if _is_image(event.key):
+        get_media_db().delete_media_file(event.key)
+        print(event.key, 'is deleted')
