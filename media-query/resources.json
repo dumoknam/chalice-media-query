@@ -9,6 +9,21 @@
       "Value": {
         "Ref": "MediaTable"
       }
+    },
+    "VideoTopicArn": {
+      "Value": {
+        "Ref": "VideoTopic"
+      }
+    },
+    "VideoTopicName": {
+      "Value": {
+        "Fn::GetAtt": ["VideoTopic", "TopicName"]
+      }
+    },
+    "VideoRoleArn": {
+      "Value": {
+        "Fn::GetAtt": ["VideoRole", "Arn"]
+      }
     }
   },
   "Resources": {
@@ -35,6 +50,43 @@
         }
       },
       "Type": "AWS::DynamoDB::Table"
+    },
+    "VideoTopic": {
+      "Type": "AWS::SNS::Topic"
+    },
+    "VideoRole": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": ["sts:AssumeRole"],
+              "Principal": {
+                "Service": ["rekognition.amazonaws.com"]
+              }
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "RekognitionPublish",
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": ["sns:Publish"],
+                  "Resource": [
+                    {
+                      "Ref": "VideoTopic"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "Type": "AWS::IAM::Role"
     }
   }
 }

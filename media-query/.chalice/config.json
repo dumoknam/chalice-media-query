@@ -7,7 +7,10 @@
       "autogen_policy": false,
       "environment_variables": {
         "MEDIA_TABLE_NAME": "chalice-media-query-MediaTable-114P73J57Z8K1",
-        "MEDIA_BUCKET_NAME": "chalice-media-query-mediabucket-1xo3serm32koj"
+        "MEDIA_BUCKET_NAME": "chalice-media-query-mediabucket-1xo3serm32koj",
+        "VIDEO_TOPIC_NAME": "chalice-media-query-VideoTopic-33DR86JGIC5G",
+        "VIDEO_ROLE_ARN": "arn:aws:iam::862108802423:role/chalice-media-query-VideoRole-N8K2ZSW3E05J",
+        "VIDEO_TOPIC_ARN": "arn:aws:sns:ap-northeast-2:862108802423:chalice-media-query-VideoTopic-33DR86JGIC5G"
       }
     }
   }
