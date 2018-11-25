@@ -33,6 +33,23 @@
       "resource_type": "s3_event",
       "bucket": "chalice-media-query-mediabucket-1xo3serm32koj",
       "lambda_arn": "arn:aws:lambda:ap-northeast-2:862108802423:function:media-query-dev-handle_object_removed"
+    },
+    {
+      "name": "api_handler_role",
+      "resource_type": "iam_role",
+      "role_arn": "arn:aws:iam::862108802423:role/media-query-dev-api_handler",
+      "role_name": "media-query-dev-api_handler"
+    },
+    {
+      "name": "api_handler",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:ap-northeast-2:862108802423:function:media-query-dev"
+    },
+    {
+      "name": "rest_api",
+      "resource_type": "rest_api",
+      "rest_api_id": "oj7k0aje77",
+      "rest_api_url": "https://oj7k0aje77.execute-api.ap-northeast-2.amazonaws.com/api/"
     }
   ],
   "schema_version": "2.0",
