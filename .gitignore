@@ -2,3 +2,5 @@ media-query/.chalice/deployments/
 media-query/.chalice/venv/
 
 .vscode/
+
+**/__pycache__/
