@@ -26,6 +26,9 @@ def record_as_env_var(stack_name, stage):
 
 
 def _to_env_var_name(name):
+    # xform_name: translate 
+    # [from] MediaTableName
+    # [to] MEDIA_TABLE_NAME
     return xform_name(name).upper()
 
 

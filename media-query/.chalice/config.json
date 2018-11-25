@@ -4,7 +4,11 @@
   "stages": {
     "dev": {
       "api_gateway_stage": "api",
-      "autogen_policy": false
+      "autogen_policy": false,
+      "environment_variables": {
+        "MEDIA_TABLE_NAME": "chalice-media-query-MediaTable-114P73J57Z8K1",
+        "MEDIA_BUCKET_NAME": "chalice-media-query-mediabucket-1xo3serm32koj"
+      }
     }
   }
 }
