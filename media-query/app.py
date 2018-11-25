@@ -1,4 +1,5 @@
 import os
+import json
 
 import boto3
 from chalice import Chalice
@@ -84,3 +85,16 @@ def _extract_db_list_params(query_params):
         k.replace('-', '_'): v
         for k, v in query_params.items() if k in valid_query_params
     }
+
+
+# SNS
+@app.on_sns_message(topic=os.environ['VIDEO_TOPIC_NAME'])
+def add_video_file(event):
+    print(event.message)
+    message = json.loads(event.message)
+    labels = get_rekognition_client().get_video_job_labels(message['JobId'])
+    get_media_db().add_media_file(
+        name=message['Video']['S3ObjectName'],
+        media_type=db.VIDEO_TYPE,
+        labels=labels
+    )
